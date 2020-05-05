@@ -1,5 +1,4 @@
 import React from 'react';
-import {setSortModeAC} from "../../redux/table-reducer";
 
 function TableRow(props) {
     return (
@@ -103,13 +102,8 @@ function TableTemplate(props) {
             />
     );
 
-    let classIdName = 'easy';
-    if (props.sortMode === 'id') {
-        classIdName = 'active';
-    }
-
     return (
-        <table border="1" width='90%' className='table'>
+        <table border='1' cellSpacing='0' width='90%' className='table'>
             <thead>
                 <tr>
                     {rowNames}

@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
         tableColumns: state.table.settings.listColumnsOfTable,
         sortMode: state.table.settings.sortMode,
         sortDirection: state.table.settings.sortDirection,
-        tableData: state.table.tableData
+        tableData: state.table.tableDataOutput
     }
 };
 
