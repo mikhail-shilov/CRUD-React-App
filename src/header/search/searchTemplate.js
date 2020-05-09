@@ -3,8 +3,8 @@ import css from './../header.module.css'
 
 function SearchTemplate(props) {
 
-    const findHandler = (text) => {
-        props.dataFilter(text);
+    const findHandler = () => {
+        props.dataFilter();
     }
     const updateValue = (event) => {
         const text = event.target.value;

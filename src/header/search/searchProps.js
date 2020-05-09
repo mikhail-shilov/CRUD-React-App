@@ -6,7 +6,7 @@ import SearchTemplate from "./searchTemplate";
 
 const mapStateToProps = (state) => {
     return {
-        findString: state.table.settings.findString,
+        findString: state.table.settings.findDraft,
     }
 };
 
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(updateFindStringAC(value));
         },
         dataFilter: () => {
-            dispatch(dataFilterSortAC('id', true));
+            dispatch(dataFilterAC());
         },
     })
 };

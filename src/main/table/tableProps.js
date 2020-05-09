@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {setSortModeAC, dataFilterSortAC} from '../../redux/table-reducer';
+import {setSortModeAC, setCurrentPageAC} from '../../redux/table-reducer';
 import TableTemplate from './tableTemplate';
 
 const mapStateToProps = (state) => {
@@ -9,7 +9,10 @@ const mapStateToProps = (state) => {
         tableColumns: state.table.settings.listColumnsOfTable,
         sortMode: state.table.settings.sortMode,
         sortDirection: state.table.settings.sortDirection,
-        tableData: state.table.tableDataOutput
+        activeFilter: state.table.settings.activeFilter,
+        tableData: state.table.tableDataOutput,
+        itemsPerPage: state.table.settings.itemsPerPage,
+        currentPage: state.table.settings.currentPage
     }
 };
 
@@ -18,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
         sortTable: (mode) => {
             dispatch(setSortModeAC(mode));
         },
+        setCurrentPage: (currentPage) => {
+            dispatch(setCurrentPageAC(currentPage));
+        }
 
     })
 };

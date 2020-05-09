@@ -7,30 +7,8 @@ function TableTemplate(props) {
 
     const reSortTable = (event) => {
 
-        let mode;
-        switch (event.target.name) {
-            case 'id':
-                mode = 'id';
-                break
-            case 'firstName':
-                mode = 'firstName';
-                break
-            case 'lastName':
-                mode = 'lastName';
-                break
-            case 'eMail':
-                mode = 'eMail';
-                break
-            case 'telNo':
-                mode = 'telNo';
-                break
-            default:
-                mode = 'id';
-                break
-        }
-        //props.readTable(mode);
+        let mode = event.target.name;
         props.sortTable(mode);
-
 
     }
 
@@ -44,8 +22,12 @@ function TableTemplate(props) {
             </td>
     )
 
+    const startItem = props.itemsPerPage*(props.currentPage-1);
+    const endItem = props.itemsPerPage*props.currentPage;
+    const itemsCount = props.tableData.length;
+    let rows = props.tableData.slice(startItem, endItem);
 
-    const rows = props.tableData.map(
+     rows=rows.map(
         row =>
             <TableRow
                 id={row.id}
@@ -58,6 +40,7 @@ function TableTemplate(props) {
 
     return (
         <div>
+            <span>{(props.activeFilter) ? 'Результаты поиска по запросу «'+props.activeFilter+'»':  '' }</span>
             <table border='1' cellSpacing='0' width='90%' className={css.table}>
                 <thead>
                 <tr>
@@ -68,7 +51,12 @@ function TableTemplate(props) {
                 {rows}
                 </tbody>
             </table>
-            <TablePagination/>
+            <TablePagination
+                currentPage={props.currentPage}
+                itemsOnPage={props.itemsPerPage}
+                itemsCount={itemsCount}
+                setCurrentPage={props.setCurrentPage}
+            />
         </div>
     );
 }
