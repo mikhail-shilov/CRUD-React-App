@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {setSortModeAC} from '../../redux/table-reducer';
+import {setSortModeAC, dataFilterSortAC} from '../../redux/table-reducer';
 import TableTemplate from './tableTemplate';
 
 const mapStateToProps = (state) => {
@@ -15,13 +15,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return ({
-        readTable: (mode) => {
+        sortTable: (mode) => {
             dispatch(setSortModeAC(mode));
         },
+
     })
 };
 
-//создание результирующей компоненты на основе шаблона и приёмника данных
 const Table = connect(mapStateToProps, mapDispatchToProps)(TableTemplate);
 
 export default Table;

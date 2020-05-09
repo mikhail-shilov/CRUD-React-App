@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {dataFilterAC, updateFindStringAC} from '../../redux/table-reducer';
+import {dataFilterAC, updateFindStringAC, dataFilterSortAC} from '../../redux/table-reducer';
 import SearchTemplate from "./searchTemplate";
 
 const mapStateToProps = (state) => {
@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(updateFindStringAC(value));
         },
         dataFilter: () => {
-            dispatch(dataFilterAC());
+            dispatch(dataFilterSortAC('id', true));
         },
     })
 };
