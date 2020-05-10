@@ -7,13 +7,21 @@ const initalState = {
             {name: 'eMail', label: 'Почта'},
             {name: 'telNo', label: 'Телефон'}
         ],
-
         sortMode: 'id',
         sortDirection: 'asc',
         findDraft: '',
         activeFilter: '',
-        itemsPerPage: 3,
-        currentPage: 1
+        itemsPerPage: 6,
+        currentPage: 1,
+        editorIsActive: false,
+        itemInEditor: {
+            indexOfItem: '',
+            id: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: ''
+        }
     },
     tableData: [
         {id: 1, firstName: "Рулон", lastName: "Обоев", email: "rulon@test.io", phone: "2342342"},
@@ -22,7 +30,8 @@ const initalState = {
         {id: 4, firstName: "Налёт", lastName: "Ковбоев", email: "naljot@test.io", phone: "4337352"},
         {id: 5, firstName: "Набег", lastName: "Комрадов", email: "nabeg@test.io", phone: "7569331"},
         {id: 6, firstName: "Кумир", lastName: "Дебилов", email: "kumir@test.io", phone: "554833"},
-        {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"}
+        {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"},
+        {id: 8, firstName: "Поджог", lastName: "Сараев", email: "podjog@test.io", phone: "344866"}
     ],
     tableDataOutput: [
         {id: 1, firstName: "Рулон", lastName: "Обоев", email: "rulon@test.io", phone: "2342342"},
@@ -31,7 +40,8 @@ const initalState = {
         {id: 4, firstName: "Налёт", lastName: "Ковбоев", email: "naljot@test.io", phone: "4337352"},
         {id: 5, firstName: "Набег", lastName: "Комрадов", email: "nabeg@test.io", phone: "7569331"},
         {id: 6, firstName: "Кумир", lastName: "Дебилов", email: "kumir@test.io", phone: "554833"},
-        {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"}
+        {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"},
+        {id: 8, firstName: "Поджог", lastName: "Сараев", email: "podjog@test.io", phone: "344866"}
     ]
 };
 
@@ -107,13 +117,12 @@ const tableReducer = (state = initalState, action) => {
             localState.settings = {...state.settings};
             localState.tableDataOutput = {...state.tableDataOutput}
 
-
-
-            let textToFind = localState.settings.findDraft;
+            const textToFind = String(localState.settings.findDraft);
 
             localState.tableDataOutput = state.tableData.filter(
                 (item) => {
                     if (
+                        (String(item.id).toLowerCase().includes(textToFind.toLowerCase())) ||
                         (item.firstName.toLowerCase().includes(textToFind.toLowerCase())) ||
                         (item.lastName.toLowerCase().includes(textToFind.toLowerCase()))
                     )
@@ -126,6 +135,68 @@ const tableReducer = (state = initalState, action) => {
             localState.settings.sortMode = 'id';
             localState.settings.sortDirection = 'asc';
             localState.settings.currentPage = 1;
+            localState.tableDataOutput.sort((a, b) => {
+                if (a.id < b.id) return (localState.settings.sortDirection === 'asc') ? -1 : 1;
+                if (a.id > b.id) return (localState.settings.sortDirection === 'asc') ? 1 : -1;
+                return 0;
+            });
+            return localState;
+        }
+        case 'LOAD-ITEM-TO-EDITOR': {
+            let localState = {...state};
+            localState.settings = {...state.settings};
+            localState.settings.editorIsActive = true;
+            localState.settings.itemInEditor = action.itemForEditor;
+            return localState;
+        }
+        case 'UPDATE-ITEM-TO-EDITOR': {
+            let localState = {...state};
+            localState.settings = {...state.settings};
+            localState.settings.itemInEditor = {...state.settings.itemInEditor};
+            switch (action.inputName) {
+                case 'firstName':
+                    localState.settings.itemInEditor.firstName = action.value;
+                    break
+                case 'lastName':
+                    localState.settings.itemInEditor.lastName = action.value;
+                    break
+                case 'eMail':
+                    localState.settings.itemInEditor.email = action.value;
+                    break
+                default:
+                    console.log('Incorrect inputName...');
+                    break
+            }
+            return localState;
+        }
+        case 'SAVE-ITEM-FROM-EDITOR': {
+            let localState = {...state};
+            localState.settings = {...state.settings};
+            localState.tableData = [...state.tableData];
+            const indexForUpdate = localState.tableData.findIndex((element, index, array) => {
+                return (element.id === action.id);
+            });
+            localState.tableData[indexForUpdate] = state.settings.itemInEditor;
+            localState.tableDataOutput = localState.tableData;
+
+            console.log(action.id);
+            console.log(indexForUpdate);
+
+
+            return localState;
+        }
+        case 'CLOSE-EDITOR': {
+            let localState = {...state};
+            localState.settings = {...state.settings};
+            localState.settings.editorIsActive = false;
+            localState.settings.itemInEditor = {
+                indexOfItem: '',
+                id: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: ''
+            }
             return localState;
         }
 
@@ -141,3 +212,23 @@ export const dataFilterAC = () => ({type: 'FILTER'});
 export const updateFindStringAC = (value) => ({type: 'UPDATE-FIND-STRING', value: value});
 export const dataFilterSortAC = (mode, filter) => ({type: 'FILTER-AND-SORT', mode: mode, filter: filter});
 export const setCurrentPageAC = (currentPage) => ({type: 'SET-CURRENT-PAGE', currentPage: currentPage});
+export const loadItemToEditorAC = (id, firstName, lastName, eMail, telNo) => ({
+    type: 'LOAD-ITEM-TO-EDITOR',
+    itemForEditor: {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        email: eMail,
+        phone: telNo
+    }
+});
+export const updateItemToEditorAC = (inputName, value) => ({
+    type: 'UPDATE-ITEM-TO-EDITOR',
+    inputName: inputName,
+    value: value
+});
+export const saveItemFromEditorAC = (id) => ({
+    type: 'SAVE-ITEM-FROM-EDITOR',
+    id: id,
+});
+export const closeEditorAC = () => ({type: 'CLOSE-EDITOR'});

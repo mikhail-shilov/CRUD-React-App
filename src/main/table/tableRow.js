@@ -1,9 +1,10 @@
 import React from 'react';
 
 function TableRow(props) {
+
     return (
         <tr onClick={() => {
-            alert('Click on ROW: '+props.id)
+            props.loadItemToEditor(props.id, props.firstName, props.lastName, props.email, props.phone);
         }}>
             <td>{props.id}</td>
             <td>{props.firstName}</td>

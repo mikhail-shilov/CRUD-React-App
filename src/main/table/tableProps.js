@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {setSortModeAC, setCurrentPageAC} from '../../redux/table-reducer';
+import {setSortModeAC, setCurrentPageAC, loadItemToEditorAC} from '../../redux/table-reducer';
 import TableTemplate from './tableTemplate';
 
 const mapStateToProps = (state) => {
@@ -23,7 +23,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         setCurrentPage: (currentPage) => {
             dispatch(setCurrentPageAC(currentPage));
-        }
+        },
+        loadItemToEditor: (id, firstName, lastName, eMail, telNo) => {
+            dispatch(loadItemToEditorAC(id, firstName, lastName, eMail, telNo));
+        },
 
     })
 };

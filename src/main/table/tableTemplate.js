@@ -1,5 +1,5 @@
 import React from 'react';
-import TableRow from "./TableRow";
+import TableRow from "./tableRow";
 import TablePagination from "./tablePagination";
 import css from './../main.module.css'
 
@@ -35,6 +35,7 @@ function TableTemplate(props) {
                 lastName={row.lastName}
                 email={row.email}
                 phone={row.phone}
+                loadItemToEditor={props.loadItemToEditor}
             />
     );
 

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from "./header/header";
 import Main from "./main/main";
-import Footer from "./footer/Footer";
+import Footer from "./footer/footerProps";
 
 function App(props) {
     console.log(props.state);

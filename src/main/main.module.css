@@ -58,8 +58,8 @@ tbody tr:hover {
     td {
         height: 30px;
     }
-    .App {
-        height: 100%;
+    .table {
+        width: 100%;
     }
 }
 
