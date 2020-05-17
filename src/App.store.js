@@ -11,7 +11,7 @@ import {
     loadAC,
     setCurrentPageAC,
     setSortModeAC,
-    updateFindStringAC
+    updateFindStringAC, switchIndicator
 } from "./redux/table-reducer";
 
 const mapStateToProps = (state) => {
@@ -35,10 +35,13 @@ const mapDispatchToProps = (dispatch) => {
         //Диспатчи компонента loader
         loadData: (source) => {
             const dataLoader = (dbPath) => {
+                debugger
+                dispatch(switchIndicator());
                 fetch(dbPath)
                     .then(response => response.json())
-                    .then(data => dispatch(loadAC(data)));
-            }
+                    .then(data => dispatch(loadAC(data)))
+                    .then(() => dispatch(switchIndicator()))}
+
             let dbPath;
             switch (source) {
                 case 'bigDataSet':

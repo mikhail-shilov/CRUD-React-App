@@ -39,6 +39,7 @@ function App(props) {
                     activeFilter={props.settings.activeFilter}
                     itemsPerPage={props.settings.itemsPerPage}
                     currentPage={props.settings.currentPage}
+                    isDataLoading={props.settings.isDataLoading}
                     tableData={props.tableOutput}
                     sortTable={props.sortTable}
                     setCurrentPage={props.setCurrentPage}

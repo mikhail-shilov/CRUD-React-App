@@ -49,7 +49,7 @@ function Table(props) {
                 </tr>
                 </thead>
                 <tbody>
-                {rows}
+                {(props.isDataLoading) ? <tr><td colSpan="5" rowSpan="10">Загрузка...</td></tr> : rows}
                 </tbody>
             </table>
             <Pagination

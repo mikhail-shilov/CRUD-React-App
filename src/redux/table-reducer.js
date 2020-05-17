@@ -13,6 +13,7 @@ const initalState = {
         activeFilter: '',
         itemsPerPage: 10,
         currentPage: 1,
+        isDataLoading: false,
         editorIsActive: false,
         itemInEditor: {
             indexOfItem: '',
@@ -55,6 +56,7 @@ const tableReducer = (state = initalState, action) => {
             //В action передаётся либо 'internal' либо объект с данными
             if (action.data === 'internal') localState.tableData = [...state.tableDataIntetnal]
             else localState.tableData = action.data;
+            localState.settings.currentPage = 1;
             localState.tableDataOutput = localState.tableData;
             localState.tableDataOutput.sort((a, b) => {
                 if (a.id < b.id) return (localState.settings.sortDirection === 'asc') ? -1 : 1;
@@ -213,6 +215,15 @@ const tableReducer = (state = initalState, action) => {
             }
             return localState;
         }
+        case 'LOADING-INDICATOR-SWITCH': {
+            let localState = {...state};
+            localState.settings = {...state.settings};
+            debugger
+            (localState.settings.isDataLoading === true) ? localState.settings.isDataLoading = false : localState.settings.isDataLoading = true;
+            console.log(localState.settings.isDataLoading);
+            debugger
+            return localState;
+        }
 
         default: {
             return state;
@@ -222,6 +233,7 @@ const tableReducer = (state = initalState, action) => {
 export default tableReducer;
 
 export const loadAC = (data) => ({type: 'LOAD-DATA', data: data});
+export const switchIndicator = () => ({type: 'LOADING-INDICATOR-SWITCH'});
 export const setSortModeAC = (mode) => ({type: 'RESORT', mode: mode});
 export const dataFilterAC = () => ({type: 'FILTER'});
 export const updateFindStringAC = (value) => ({type: 'UPDATE-FIND-STRING', value: value});
