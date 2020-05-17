@@ -1,8 +1,8 @@
 import React from 'react';
-import css from './../main.module.css'
+import css from '../../css/main.module.css'
 
 
-function TablePagination(props) {
+function Pagination(props) {
 
     let linksArray = [];
     const itemsOnPage = props.itemsOnPage;
@@ -30,4 +30,4 @@ function TablePagination(props) {
     );
 }
 
-export default TablePagination;
+export default Pagination;

@@ -1,7 +1,7 @@
 import React from 'react';
-import css from './../header.module.css'
+import css from './search.module.css'
 
-function SearchTemplate(props) {
+function Search(props) {
 
     const findHandler = () => {
         props.dataFilter();
@@ -31,4 +31,4 @@ function SearchTemplate(props) {
     );
 }
 
-export default SearchTemplate;
+export default Search;

@@ -1,9 +1,9 @@
 import React from 'react';
-import TableRow from "./tableRow";
-import TablePagination from "./tablePagination";
-import css from './../main.module.css'
+import Row from "./row";
+import Pagination from "./pagination";
+import css from './table.module.css'
 
-function TableTemplate(props) {
+function Table(props) {
 
     const reSortTable = (event) => {
 
@@ -29,7 +29,7 @@ function TableTemplate(props) {
 
      rows=rows.map(
         row =>
-            <TableRow
+            <Row
                 id={row.id}
                 firstName={row.firstName}
                 lastName={row.lastName}
@@ -42,7 +42,7 @@ function TableTemplate(props) {
     return (
         <div>
             <span>{(props.activeFilter) ? 'Результаты поиска по запросу «'+props.activeFilter+'»':  '' }</span>
-            <table border='1' cellSpacing='0' width='90%' className={css.table}>
+            <table border='1' cellSpacing='0' className={css.table}>
                 <thead>
                 <tr>
                     {rowNames}
@@ -52,7 +52,7 @@ function TableTemplate(props) {
                 {rows}
                 </tbody>
             </table>
-            <TablePagination
+            <Pagination
                 currentPage={props.currentPage}
                 itemsOnPage={props.itemsPerPage}
                 itemsCount={itemsCount}
@@ -62,4 +62,4 @@ function TableTemplate(props) {
     );
 }
 
-export default TableTemplate;
+export default Table;

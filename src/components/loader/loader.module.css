@@ -1,0 +1,8 @@
+.loader {
+    display: flex;
+}
+.loader button {
+    margin: 5px 5px;
+    width: 100px;
+    height: 48px;
+}

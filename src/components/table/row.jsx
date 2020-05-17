@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TableRow(props) {
+function Row(props) {
 
     return (
         <tr onClick={() => {
@@ -15,4 +15,4 @@ function TableRow(props) {
     );
 }
 
-export default TableRow;
+export default Row;

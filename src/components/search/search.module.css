@@ -1,0 +1,19 @@
+.search {
+    display: flex;
+    font-size: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search input {
+    margin: 5px 10px;
+    width: 300px;
+    font-size: inherit;
+}
+
+.search button {
+    margin: 5px 10px;
+    width: 85px;
+    font-size: inherit;
+
+}

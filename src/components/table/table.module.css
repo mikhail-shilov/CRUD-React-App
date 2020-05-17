@@ -6,7 +6,9 @@
 
 .table {
     border: 1px solid #fff;
-    width: 1280px;
+    width: 100%;
+    margin: auto;
+
 }
 
 a {
@@ -45,11 +47,7 @@ td:first-child {
 tbody tr:hover {
     background-color: antiquewhite;
 }
-@media (width: 500px) {
-    table {
-        font-size: 12px;
-    }
-}
+
 
 @media screen and (max-width: 768px) {
     table {
@@ -59,7 +57,7 @@ tbody tr:hover {
         height: 30px;
     }
     .table {
-        width: 100%;
+        width: 95%;
     }
 }
 

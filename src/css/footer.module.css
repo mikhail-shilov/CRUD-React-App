@@ -1,7 +1,8 @@
 .footer {
     background-color: aquamarine;
-    height: 110px;
+    min-height: 110px;
 }
+
 .editor {
     display: flex;
     justify-content: center;
@@ -9,10 +10,24 @@
     align-content: center;
     flex-wrap: wrap;
 }
+
 .editorInput {
     margin: 10px 5px;
     font-size: 18px;
 }
+
+.editorButton {
+    margin: 10px 5px;
+    font-size: 18px;
+}
+
 .editorInput:first-child {
     width: 32px;
 }
+
+@media screen and (max-width: 768px) {
+    .editorInput:first-child {
+        display: none;
+    }
+}
+

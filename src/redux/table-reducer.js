@@ -11,7 +11,7 @@ const initalState = {
         sortDirection: 'asc',
         findDraft: '',
         activeFilter: '',
-        itemsPerPage: 6,
+        itemsPerPage: 10,
         currentPage: 1,
         editorIsActive: false,
         itemInEditor: {
@@ -23,6 +23,16 @@ const initalState = {
             phone: ''
         }
     },
+    tableDataIntetnal: [
+        {id: 1, firstName: "Рулон", lastName: "Обоев", email: "rulon@test.io", phone: "2342342"},
+        {id: 2, firstName: "Ушат", lastName: "Помоев", email: "ushat@test.io", phone: "2344672"},
+        {id: 3, firstName: "Черёд", lastName: "Застоев", email: "chered@test.io", phone: "1354682"},
+        {id: 4, firstName: "Налёт", lastName: "Ковбоев", email: "naljot@test.io", phone: "4337352"},
+        {id: 5, firstName: "Набег", lastName: "Комрадов", email: "nabeg@test.io", phone: "7569331"},
+        {id: 6, firstName: "Кумир", lastName: "Дебилов", email: "kumir@test.io", phone: "554833"},
+        {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"},
+        {id: 8, firstName: "Поджог", lastName: "Сараев", email: "podjog@test.io", phone: "344866"}
+    ],
     tableData: [
         {id: 1, firstName: "Рулон", lastName: "Обоев", email: "rulon@test.io", phone: "2342342"},
         {id: 2, firstName: "Ушат", lastName: "Помоев", email: "ushat@test.io", phone: "2344672"},
@@ -33,20 +43,26 @@ const initalState = {
         {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"},
         {id: 8, firstName: "Поджог", lastName: "Сараев", email: "podjog@test.io", phone: "344866"}
     ],
-    tableDataOutput: [
-        {id: 1, firstName: "Рулон", lastName: "Обоев", email: "rulon@test.io", phone: "2342342"},
-        {id: 2, firstName: "Ушат", lastName: "Помоев", email: "ushat@test.io", phone: "2344672"},
-        {id: 3, firstName: "Черёд", lastName: "Застоев", email: "chered@test.io", phone: "1354682"},
-        {id: 4, firstName: "Налёт", lastName: "Ковбоев", email: "naljot@test.io", phone: "4337352"},
-        {id: 5, firstName: "Набег", lastName: "Комрадов", email: "nabeg@test.io", phone: "7569331"},
-        {id: 6, firstName: "Кумир", lastName: "Дебилов", email: "kumir@test.io", phone: "554833"},
-        {id: 7, firstName: "Учёт", lastName: "Побоев", email: "uchot@test.io", phone: "644861"},
-        {id: 8, firstName: "Поджог", lastName: "Сараев", email: "podjog@test.io", phone: "344866"}
-    ]
+    tableDataOutput: []
 };
 
 const tableReducer = (state = initalState, action) => {
     switch (action.type) {
+        case 'LOAD-DATA': {
+            let localState = {...state};
+            localState.settings = {...state.settings};
+
+            //В action передаётся либо 'internal' либо объект с данными
+            if (action.data === 'internal') localState.tableData = [...state.tableDataIntetnal]
+            else localState.tableData = action.data;
+            localState.tableDataOutput = localState.tableData;
+            localState.tableDataOutput.sort((a, b) => {
+                if (a.id < b.id) return (localState.settings.sortDirection === 'asc') ? -1 : 1;
+                if (a.id > b.id) return (localState.settings.sortDirection === 'asc') ? 1 : -1;
+                return 0;
+            });
+            return localState;
+        }
         case 'RESORT': {
             let localState = {...state};
             localState.settings = {...state.settings};
@@ -163,6 +179,9 @@ const tableReducer = (state = initalState, action) => {
                 case 'eMail':
                     localState.settings.itemInEditor.email = action.value;
                     break
+                case 'telNo':
+                    localState.settings.itemInEditor.phone = action.value;
+                    break
                 default:
                     console.log('Incorrect inputName...');
                     break
@@ -178,11 +197,6 @@ const tableReducer = (state = initalState, action) => {
             });
             localState.tableData[indexForUpdate] = state.settings.itemInEditor;
             localState.tableDataOutput = localState.tableData;
-
-            console.log(action.id);
-            console.log(indexForUpdate);
-
-
             return localState;
         }
         case 'CLOSE-EDITOR': {
@@ -207,10 +221,10 @@ const tableReducer = (state = initalState, action) => {
 };
 export default tableReducer;
 
+export const loadAC = (data) => ({type: 'LOAD-DATA', data: data});
 export const setSortModeAC = (mode) => ({type: 'RESORT', mode: mode});
 export const dataFilterAC = () => ({type: 'FILTER'});
 export const updateFindStringAC = (value) => ({type: 'UPDATE-FIND-STRING', value: value});
-export const dataFilterSortAC = (mode, filter) => ({type: 'FILTER-AND-SORT', mode: mode, filter: filter});
 export const setCurrentPageAC = (currentPage) => ({type: 'SET-CURRENT-PAGE', currentPage: currentPage});
 export const loadItemToEditorAC = (id, firstName, lastName, eMail, telNo) => ({
     type: 'LOAD-ITEM-TO-EDITOR',

@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./../footer.module.css"
+import css from "../../css/footer.module.css"
 
 const Editor = (props) => {
 
@@ -25,8 +25,10 @@ const Editor = (props) => {
                 <input className={css.editorInput} name='lastName' value={props.itemInEditor.lastName} onChange={inputHandler}/>
                 <input className={css.editorInput} name='eMail' value={props.itemInEditor.email} onChange={inputHandler}/>
                 <input className={css.editorInput} name='telNo' value={props.itemInEditor.phone} onChange={inputHandler}/>
-                <button className={css.editorInput} onClick={saveHandler}>Сохранить</button>
-                <button className={css.editorInput} onClick={cancelHandler}>Отменить</button>
+                <div>
+                <button className={css.editorButton} onClick={saveHandler}>Сохранить</button>
+                <button className={css.editorButton} onClick={cancelHandler}>Отменить</button>
+                </div>
             </div>
     );
 }
