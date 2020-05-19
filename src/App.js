@@ -7,6 +7,7 @@ import Loader from "./components/loader/loader";
 import Search from "./components/search/search";
 import Table from "./components/table/table";
 import Editor from "./components/editor/Editor";
+import Test from "./components/test/test";
 
 function App(props) {
 
@@ -14,9 +15,9 @@ function App(props) {
 
     const editor = () => {return <Editor
         itemInEditor={props.settings.itemInEditor}
-        updateItemInEditor={props.settings.updateItemInEditor}
-        saveItemFromEditor={props.settings.saveItemFromEditor}
-        closeEditor={props.settings.closeEditor}
+        updateItemInEditor={props.updateItemInEditor}
+        saveItemFromEditor={props.saveItemFromEditor}
+        closeEditor={props.closeEditor}
     />};
     if (props.tableOutput.length === 0) props.loadData('internal');
     return (

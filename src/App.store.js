@@ -35,7 +35,6 @@ const mapDispatchToProps = (dispatch) => {
         //Диспатчи компонента loader
         loadData: (source) => {
             const dataLoader = (dbPath) => {
-                debugger
                 dispatch(switchIndicator());
                 fetch(dbPath)
                     .then(response => response.json())

@@ -218,10 +218,8 @@ const tableReducer = (state = initalState, action) => {
         case 'LOADING-INDICATOR-SWITCH': {
             let localState = {...state};
             localState.settings = {...state.settings};
-            debugger
             (localState.settings.isDataLoading === true) ? localState.settings.isDataLoading = false : localState.settings.isDataLoading = true;
             console.log(localState.settings.isDataLoading);
-            debugger
             return localState;
         }
 
